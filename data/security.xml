@@ -1,0 +1,24 @@
+<odoo>
+    <data>
+        <!-- Definición de reglas de acceso -->
+        <record id="access_account_general_ledger" model="ir.model.access">
+            <field name="name">Access for General Ledger</field>
+            <field name="model_id" ref="model_account_general_ledger"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="access_generated_report" model="ir.model.access">
+            <field name="name">Access for Generated Report</field>
+            <field name="model_id" ref="model_generated_report"/>
+            <field name="group_id" ref="base.group_user"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>
