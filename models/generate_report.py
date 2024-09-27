@@ -21,3 +21,4 @@ class GeneratedReport(models.Model):
     credit = fields.Float(string='Creditos', digits=(16, 2), default=0.0)
     final_balance = fields.Float(string='Balance final', digits=(16, 2), default=0.0)
     start_balance = fields.Float(string='Balance inicial', digits=(16, 2), default=0.0)
+    date = fields.Date(string="Date")

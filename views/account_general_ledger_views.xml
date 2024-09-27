@@ -51,7 +51,7 @@
         <record id="action_general_ledger_form" model="ir.actions.act_window">
             <field name="name">Reporte</field>
             <field name="res_model">account.general_ledger</field>
-            <field name="view_mode">form</field>
+            <field name="view_mode">form,tree,pivot</field>
             <field name="view_id" ref="view_account_general_ledger_form"/>
         </record>
 
