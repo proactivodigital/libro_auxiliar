@@ -7,6 +7,7 @@
     'description': 'Módulo para gestionar los medios magnéticos',
     'data': [
         'views/account_general_ledger_views.xml',
+        'views/account_balance_sheet.xml',
         'data/security.xml',
     ],
     'installable': True,
