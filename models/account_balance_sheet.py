@@ -10,6 +10,8 @@ class AccountBalanceSheet(models.Model):
     _description = 'Balance Sheet'
 
     balance_sheet_lines = fields.One2many('account.balance_sheet.lines', 'balance_sheet_id')
+    date = fields.Date(string='Fecha de generación', default=fields.Date.context_today)
+    name = fields.Char(string='Nombre', compute='_compute_name', store=True)
 
     first_day_last_month = datetime.now().replace(day=1) - timedelta(days=1)
     first_day_last_month = first_day_last_month.replace(day=1)
@@ -19,6 +21,12 @@ class AccountBalanceSheet(models.Model):
     partner_id = fields.Many2one('res.partner', string='Partner')
     account_id_from = fields.Many2one('account.account', string='From Account')
     account_id_to = fields.Many2one('account.account', string='To Account')
+
+    @api.depends('date')
+    def _compute_name(self):
+        for record in self:
+            if record.date:
+                record.name = f"balance_general_{record.date.strftime('%Y_%m_%d')}"
 
     def generate_report(self):
         if not self.date_from or not self.date_to:
