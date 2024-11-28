@@ -61,8 +61,8 @@
         <record id="action_balance_sheet_form" model="ir.actions.act_window">
             <field name="name">Balance General Reporte</field>
             <field name="res_model">account.balance_sheet</field>
-            <field name="view_mode">form,tree</field>
-            <field name="view_id" ref="view_account_balance_sheet_form"/>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_balance_sheet_tree"/>
         </record>
 
         <record id="menu_balance_sheet" model="ir.ui.menu">
