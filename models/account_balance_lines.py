@@ -1,7 +1,7 @@
 from odoo import models, fields
 
 class GeneratedReport(models.Model):
-    _name = 'generated.report'
+    _name = 'account.balance_sheet.lines'
     _description = 'Reporte'
 
     is_total = fields.Boolean(string='¿Es Total?')

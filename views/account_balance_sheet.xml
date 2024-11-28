@@ -5,8 +5,16 @@
             <field name="name">account.balance_sheet.form</field>
             <field name="model">account.balance_sheet</field>
             <field name="arch" type="xml">
-                <form string="Balance General Auxiliar" create="false" edit="false" navigational="False" options="{'no_create': True}">
+                <form string="Balance General Auxiliar" edit="false">
+                    <header>
+                        <button string="Generar reporte" type="object" name="action_convert_to_quotation" class="oe_highlight" invisible="1 if has_quotation else 0"/>
+                    </header>
                     <sheet>
+                        <div class="oe_title">
+                            <h3>
+                                <field name="name" readonly="1" field_id="name_0"/>
+                            </h3>
+                        </div>
                         <group>
                             <group>
                                 <field name="date_from"/>
@@ -16,43 +24,47 @@
                                 <field name="partner_id" placeholder="Todos" help="Para seleccionar todos los terceros, simplemente deja este campo en blanco."/>
                                 <field name="account_id_from" placeholder="Desde cuenta contable" help="Este campo indica la cuenta contable a partir de la cual se generarán los datos del informe. Si se deja vacío, el informe comenzará desde la primera cuenta contable creada en el sistema. Si se selecciona una cuenta específica, el informe se generará comenzando desde esa cuenta hacia adelante, incluyendo todas las cuentas posteriores en la secuencia de cuentas contables."/>
                                 <field name="account_id_to" placeholder="Hasta cuenta contable" help="Este campo indica la cuenta contable hasta la cual se generarán los datos del informe. Si se deja vacío, el informe incluirá todas las cuentas contables desde la cuenta de inicio especificada hasta la última cuenta creada en el sistema. Si se selecciona una cuenta específica, el informe se generará hasta esa cuenta, incluyendo todas las cuentas anteriores en la secuencia de cuentas contables."/>
-                            </group>
-                            <group>
-                                <button name="show_report" string="Generar" type="object" class="btn-primary"/>
-                            </group>          
+                            </group>    
                         </group>
+                        <notebook>
+                            <page string="Información General" name="bottom">
+                                <field name="balance_sheet_lines" nolabel="1" widget="section_and_note_one2many" mode="tree">
+                                    <tree>
+                                        <field name="code_digits"/>
+                                        <field name="account"/>
+                                        <field name="user"/>
+                                        <field name="company_doc"/>
+                                        <field name="start_balance" />
+                                        <field name="debit"/>
+                                        <field name="credit"/>
+                                        <field name="final_balance"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
         </record>
 
-        <!-- Vista Pivot para el modelo GeneratedReport con filtros de fechas -->
-        <record id="view_generated_report_pivot" model="ir.ui.view">
+        <record id="view_balance_sheet_tree" model="ir.ui.view">
             <field name="name">account.balance_sheet.tree</field>
             <field name="model">account.balance_sheet</field>
             <field name="arch" type="xml">
                 <tree string="Balance General">
-                    <field name="code_digits"/>
-                    <field name="account"/>
-                    <field name="user"/>
-                    <field name="company_doc"/>
-                    <field name="start_balance" />
-                    <field name="debit"/>
-                    <field name="credit"/>
-                    <field name="final_balance"/>
+                    <field name="name"/>
+                    <field name="date"/>
                 </tree>
             </field>
         </record>
 
-        <!-- Acción para abrir la vista account.balance_sheet -->
         <record id="action_balance_sheet_form" model="ir.actions.act_window">
             <field name="name">Balance General Reporte</field>
             <field name="res_model">account.balance_sheet</field>
-            <field name="view_mode">form,tree,pivot</field>
+            <field name="view_mode">form,tree</field>
             <field name="view_id" ref="view_account_balance_sheet_form"/>
         </record>
 
-        <!-- Menú para acceder a la vista account.balance_sheet -->
         <record id="menu_balance_sheet" model="ir.ui.menu">
             <field name="name">Balance General Corregido</field>
             <field name="parent_id" ref="account_reports.account_reports_audit_reports_menu"/>
