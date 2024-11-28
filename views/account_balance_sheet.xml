@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <form string="Balance General Auxiliar" edit="false">
                     <header>
-                        <button string="Generar reporte" type="object" name="action_convert_to_quotation" class="oe_highlight" invisible="1 if has_quotation else 0"/>
+                        <button string="Generar reporte" type="object" name="generate_report" class="oe_highlight"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
