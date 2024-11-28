@@ -61,4 +61,7 @@ class AccountBalanceSheet(models.Model):
                 'final_balance': move.balance,
             }))
 
-        self.write({'balance_sheet_lines': lines})
+        if not lines:
+            raise UserError("No se encontraron movimientos contables para las fechas seleccionadas.")
+
+        self.balance_sheet_lines = lines
