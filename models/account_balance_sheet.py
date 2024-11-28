@@ -9,7 +9,7 @@ class AccountBalanceSheet(models.Model):
     _name = 'account.balance_sheet'
     _description = 'Balance Sheet'
 
-    balance_sheet_lines = fields.One2many('account.balance_sheet.lines')
+    balance_sheet_lines = fields.One2many('account.balance_sheet.lines', 'balance_sheet_id')
 
     first_day_last_month = datetime.now().replace(day=1) - timedelta(days=1)
     first_day_last_month = first_day_last_month.replace(day=1)

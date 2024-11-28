@@ -3,6 +3,8 @@ from odoo import models, fields
 class GeneratedReport(models.Model):
     _name = 'account.balance_sheet.lines'
     _description = 'Reporte'
+    
+    balance_sheet_id = fields.Many2one('account.balance_sheet', string='ipbu', required=False, ondelete='cascade')
 
     is_total = fields.Boolean(string='¿Es Total?')
     code_digits = fields.Char(string='Codigos')
