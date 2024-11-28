@@ -24,3 +24,4 @@ class GeneratedReport(models.Model):
     final_balance = fields.Float(string='Balance final', digits=(16, 2), default=0.0)
     start_balance = fields.Float(string='Balance inicial', digits=(16, 2), default=0.0)
     date = fields.Date(string="Date")
+    company_doc = fields.Char(string='Documento Tercero')
