@@ -49,8 +49,9 @@ class AccountBalanceSheet(models.Model):
 
         moves = self.env['account.move.line'].search(partner_domain)
 
+        lines = []
         for move in moves:
-            self.env['account.balance_sheet'].create({
+            lines.append((0, 0, {
                 'account': f"{move.account_id.name}",
                 'code_digits': move.account_id.code,
                 'user': move.partner_id.name,
@@ -59,4 +60,6 @@ class AccountBalanceSheet(models.Model):
                 'debit': move.debit,
                 'credit': move.credit,
                 'final_balance': move.balance,
-            })
+            }))
+
+        self.write({'balance_sheet_lines': lines})
