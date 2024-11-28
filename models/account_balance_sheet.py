@@ -43,7 +43,6 @@ class AccountBalanceSheet(models.Model):
         if self.partner_id:
             partner_domain.append(('partner_id', '=', self.partner_id.id))
 
-        self.env['account.balance_sheet'].search([]).unlink()
         excluded_codes = []
         partner_domain.append(('account_id.code', 'not in', excluded_codes))
 
