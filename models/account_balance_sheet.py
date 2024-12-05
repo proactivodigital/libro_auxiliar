@@ -50,16 +50,17 @@ class AccountBalanceSheet(models.Model):
 
         lines = []
         for move in moves:
-            lines.append((0, 0, {
-                'account': f"{move.account_id.name}",
-                'code_digits': move.account_id.code,
-                'user': move.partner_id.name,
-                'company_doc': move.partner_id.vat,
-                'start_balance': move.cumulated_balance,
-                'debit': move.debit,
-                'credit': move.credit,
-                'final_balance': move.balance,
-            }))
+            if move.move.account_id.name != False OR move.account_id.name != 'False':
+                lines.append((0, 0, {
+                    'account': f"{move.account_id.name}",
+                    'code_digits': move.account_id.code,
+                    'user': move.partner_id.name,
+                    'company_doc': move.partner_id.vat,
+                    'start_balance': move.cumulated_balance,
+                    'debit': move.debit,
+                    'credit': move.credit,
+                    'final_balance': move.balance,
+                }))
 
         if not lines:
             raise UserError("No se encontraron movimientos contables para las fechas seleccionadas.")
