@@ -50,12 +50,7 @@ class AccountBalanceSheet(models.Model):
 
         lines = []
         for move in moves:
-            if move.account_id.code 
-                and move.account_id.code.strip()
-                and move.account_id.name
-                and move.account_id.name.strip()
-                and move.account_id.name.strip().lower() != "false"
-                and move.account_id.name.strip().lower() != False:
+            if move.account_id.code and move.account_id.code.strip() and move.account_id.name and move.account_id.name.strip() and move.account_id.name.strip().lower() != "false" and move.account_id.name.strip().lower() != False:
                 lines.append((0, 0, {
                     'account': f"{move.account_id.name}",
                     'code_digits': move.account_id.code,
