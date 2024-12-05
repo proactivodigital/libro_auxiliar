@@ -82,7 +82,7 @@ class AccountBalanceSheet(models.Model):
 
     def _get_initial_balance(self, account_id, date_from):
         """Calcula el saldo inicial de una cuenta antes de una fecha específica."""
-        domain = [('account_id', '=', account_id.id), ('date', '<', date_from)]
+        domain = [('account_id', '=', account_id.id), ('date', '=', date_from)]
         initial_moves = self.env['account.move.line'].search(domain)
         initial_balance = sum(initial_moves.mapped(lambda m: m.debit - m.credit))
         return initial_balance
