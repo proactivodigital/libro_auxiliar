@@ -65,4 +65,4 @@ class AccountBalanceSheet(models.Model):
         if not lines:
             raise UserError("No se encontraron movimientos contables para las fechas seleccionadas.")
 
-        self.balance_sheet_lines = sorted(lines, key=lambda m: m.code_digits)
+        self.balance_sheet_lines = sorted(lines, key=lambda m: m[2]['code_digits'])
