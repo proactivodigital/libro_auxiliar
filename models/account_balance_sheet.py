@@ -50,7 +50,7 @@ class AccountBalanceSheet(models.Model):
 
         lines = []
         for move in moves:
-            if move.account_id.name != False or move.account_id.name != 'False':
+            if move.account_id.code:
                 lines.append((0, 0, {
                     'account': f"{move.account_id.name}",
                     'code_digits': move.account_id.code,
@@ -65,4 +65,4 @@ class AccountBalanceSheet(models.Model):
         if not lines:
             raise UserError("No se encontraron movimientos contables para las fechas seleccionadas.")
 
-        self.balance_sheet_lines = lines
+        self.balance_sheet_lines = sorted(lines, key=lambda m: m.account_id.code)
