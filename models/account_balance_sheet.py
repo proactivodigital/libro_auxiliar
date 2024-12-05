@@ -43,26 +43,46 @@ class AccountBalanceSheet(models.Model):
         if self.partner_id:
             partner_domain.append(('partner_id', '=', self.partner_id.id))
 
-        excluded_codes = []
-        partner_domain.append(('account_id.code', 'not in', excluded_codes))
-
         moves = self.env['account.move.line'].search(partner_domain)
 
         lines = []
+        saldo_inicial = {}  # Para almacenar saldos iniciales por cuenta
         for move in moves:
-            if move.account_id.code and move.account_id.code.strip() and move.account_id.name and move.account_id.name.strip() and move.account_id.name.strip().lower() != "false" and move.account_id.name.strip().lower() != False:
+            if move.account_id and move.account_id.code:
+                cuenta_code = move.account_id.code
+
+                # Obtener saldo inicial de la cuenta si no se ha calculado
+                if cuenta_code not in saldo_inicial:
+                    saldo_inicial[cuenta_code] = self._get_initial_balance(move.account_id, date_from)
+
+                # Calcular el balance inicial y final
+                inicio_balance = saldo_inicial[cuenta_code]
+                final_balance = inicio_balance + move.debit - move.credit
+
+                # Agregar línea al informe
                 lines.append((0, 0, {
                     'account': f"{move.account_id.name}",
                     'code_digits': move.account_id.code,
                     'user': move.partner_id.name,
                     'company_doc': move.partner_id.vat,
-                    'start_balance': move.cumulated_balance,
+                    'start_balance': inicio_balance,
                     'debit': move.debit,
                     'credit': move.credit,
-                    'final_balance': move.balance,
+                    'final_balance': final_balance,
                 }))
+
+                # Actualizar saldo inicial para el siguiente movimiento
+                saldo_inicial[cuenta_code] = final_balance
 
         if not lines:
             raise UserError("No se encontraron movimientos contables para las fechas seleccionadas.")
 
+        # Ordenar correctamente por código de cuenta
         self.balance_sheet_lines = sorted(lines, key=lambda m: m[2]['code_digits'])
+
+    def _get_initial_balance(self, account_id, date_from):
+        """Calcula el saldo inicial de una cuenta antes de una fecha específica."""
+        domain = [('account_id', '=', account_id.id), ('date', '<', date_from)]
+        initial_moves = self.env['account.move.line'].search(domain)
+        initial_balance = sum(initial_moves.mapped(lambda m: m.debit - m.credit))
+        return initial_balance
