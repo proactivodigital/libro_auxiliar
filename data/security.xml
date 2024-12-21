@@ -1,23 +1,25 @@
 <odoo>
     <data>
+        <!-- Access for the 'account.balance_sheet' model (Balance Sheet) -->
         <record id="access_account_balance_sheet" model="ir.model.access">
-            <field name="name">Access for Balance Sheet</field>
-            <field name="model_id" ref="model_account_balance_sheet"/>
-            <field name="group_id" ref="base.group_user"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_unlink" eval="True"/>
+            <field name="name">Access for Balance Sheet</field>  <!-- Name of the access rule -->
+            <field name="model_id" ref="model_account_balance_sheet"/>  <!-- Reference to the 'account.balance_sheet' model -->
+            <field name="group_id" ref="base.group_user"/>  <!-- User group that will have this access (group 'User') -->
+            <field name="perm_read" eval="True"/>  <!-- Read permission (True = allowed) -->
+            <field name="perm_write" eval="True"/>  <!-- Write permission (True = allowed) -->
+            <field name="perm_create" eval="True"/>  <!-- Create permission (True = allowed) -->
+            <field name="perm_unlink" eval="True"/>  <!-- Delete permission (True = allowed) -->
         </record>
 
+        <!-- Access for the 'account.balance_sheet.lines' model (Balance Sheet Lines) -->
         <record id="access_account_balance_sheet_lines" model="ir.model.access">
-            <field name="name">Access for Balance Sheet lines</field>
-            <field name="model_id" ref="model_account_balance_sheet_lines"/>
-            <field name="group_id" ref="base.group_user"/>
-            <field name="perm_read" eval="True"/>
-            <field name="perm_write" eval="True"/>
-            <field name="perm_create" eval="True"/>
-            <field name="perm_unlink" eval="True"/>
+            <field name="name">Access for Balance Sheet lines</field>  <!-- Name of the access rule -->
+            <field name="model_id" ref="model_account_balance_sheet_lines"/>  <!-- Reference to the 'account.balance_sheet.lines' model -->
+            <field name="group_id" ref="base.group_user"/>  <!-- User group that will have this access (group 'User') -->
+            <field name="perm_read" eval="True"/>  <!-- Read permission (True = allowed) -->
+            <field name="perm_write" eval="True"/>  <!-- Write permission (True = allowed) -->
+            <field name="perm_create" eval="True"/>  <!-- Create permission (True = allowed) -->
+            <field name="perm_unlink" eval="True"/>  <!-- Delete permission (True = allowed) -->
         </record>
     </data>
 </odoo>

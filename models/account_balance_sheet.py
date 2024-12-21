@@ -13,6 +13,7 @@ class AccountBalanceSheet(models.Model):
     date = fields.Date(string='Fecha de generación', default=fields.Date.context_today)
     name = fields.Char(string='Nombre', compute='_compute_name', store=True)
 
+    # Definición de las fechas por defecto (primer y último día del mes anterior)
     first_day_last_month = datetime.now().replace(day=1) - timedelta(days=1)
     first_day_last_month = first_day_last_month.replace(day=1)
     last_day_last_month = datetime.now().replace(day=1) - timedelta(days=1)
@@ -24,17 +25,20 @@ class AccountBalanceSheet(models.Model):
 
     @api.depends('date')
     def _compute_name(self):
+        """Calcula el nombre del balance general usando la fecha."""
         for record in self:
             if record.date:
                 record.name = f"balance_general_{record.date.strftime('%Y_%m_%d')}"
 
     def generate_report(self):
+        """Genera el reporte de balance general auxiliar."""
         if not self.date_from or not self.date_to:
             raise UserError("Debes completar las fechas 'Desde' y 'Hasta'.")
 
         date_from = self.date_from.strftime("%Y-%m-%d")
         date_to = self.date_to.strftime("%Y-%m-%d")
 
+        # Filtros de búsqueda para los movimientos contables
         partner_domain = [('date', '>=', date_from), ('date', '<=', date_to)]
         if self.account_id_from:
             partner_domain.append(('account_id.code', '>=', self.account_id_from.code))
@@ -43,6 +47,7 @@ class AccountBalanceSheet(models.Model):
         if self.partner_id:
             partner_domain.append(('partner_id', '=', self.partner_id.id))
 
+        # Búsqueda de movimientos contables
         moves = self.env['account.move.line'].search(partner_domain)
 
         lines = []
@@ -51,6 +56,7 @@ class AccountBalanceSheet(models.Model):
             if move.account_id and move.account_id.code:
                 cuenta_code = move.account_id.code
 
+                # Obtener el saldo inicial de la cuenta
                 saldo_inicial = self._get_initial_balance(move.account_id, date_from)
 
                 # Calcular el balance inicial y final

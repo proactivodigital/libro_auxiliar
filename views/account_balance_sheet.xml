@@ -1,43 +1,50 @@
 <odoo>
     <data>
-        <!-- Vista Formulario para el modelo account.balance_sheet -->
+        <!-- Form View for the model account.balance_sheet -->
         <record id="view_account_balance_sheet_form" model="ir.ui.view">
-            <field name="name">account.balance_sheet.form</field>
-            <field name="model">account.balance_sheet</field>
+            <field name="name">account.balance_sheet.form</field>  <!-- Name of the view -->
+            <field name="model">account.balance_sheet</field>  <!-- Model that the view is associated with -->
             <field name="arch" type="xml">
-                <form string="Balance General Auxiliar" edit="false">
+                <form string="Balance General Auxiliar" edit="false">  <!-- View title and edit permissions -->
                     <header>
+                        <!-- Button to generate the report -->
                         <button string="Generar reporte" type="object" name="generate_report" class="oe_highlight"/>
                     </header>
                     <sheet>
+                        <!-- Title of the view -->
                         <div class="oe_title">
                             <h3>
                                 <field name="name" readonly="1" field_id="name_0"/>
                             </h3>
                         </div>
                         <group>
+                            <!-- Search filters for the view -->
                             <group>
-                                <field name="date_from"/>
-                                <field name="date_to"/>
+                                <field name="date_from"/>  <!-- Field for "From" date -->
+                                <field name="date_to"/>    <!-- Field for "To" date -->
                             </group>
                             <group>
-                                <field name="partner_id" placeholder="Todos" help="Para seleccionar todos los terceros, simplemente deja este campo en blanco."/>
-                                <field name="account_id_from" placeholder="Desde cuenta contable" help="Este campo indica la cuenta contable a partir de la cual se generarán los datos del informe. Si se deja vacío, el informe comenzará desde la primera cuenta contable creada en el sistema. Si se selecciona una cuenta específica, el informe se generará comenzando desde esa cuenta hacia adelante, incluyendo todas las cuentas posteriores en la secuencia de cuentas contables."/>
-                                <field name="account_id_to" placeholder="Hasta cuenta contable" help="Este campo indica la cuenta contable hasta la cual se generarán los datos del informe. Si se deja vacío, el informe incluirá todas las cuentas contables desde la cuenta de inicio especificada hasta la última cuenta creada en el sistema. Si se selecciona una cuenta específica, el informe se generará hasta esa cuenta, incluyendo todas las cuentas anteriores en la secuencia de cuentas contables."/>
-                            </group>    
+                                <!-- Filter to select the partner -->
+                                <field name="partner_id" placeholder="Todos" help="To select all partners, simply leave this field empty."/>
+                                <!-- Filter to select the account from -->
+                                <field name="account_id_from" placeholder="Desde cuenta contable" help="This field specifies the account from which the report will start. If left empty, the report will begin from the first account created in the system. If a specific account is selected, the report will begin from that account onwards."/>
+                                <!-- Filter to select the account to -->
+                                <field name="account_id_to" placeholder="Hasta cuenta contable" help="This field specifies the account up to which the report will generate data. If left empty, the report will include all accounts from the starting account to the last account created in the system. If a specific account is selected, the report will include up to that account."/>
+                            </group>
                         </group>
                         <notebook>
                             <page string="Información General" name="bottom">
+                                <!-- View for balance sheet lines -->
                                 <field name="balance_sheet_lines" nolabel="1" widget="section_and_note_one2many" mode="tree">
                                     <tree>
-                                        <field name="code_digits"/>
-                                        <field name="account"/>
-                                        <field name="user"/>
-                                        <field name="company_doc"/>
-                                        <field name="start_balance" />
-                                        <field name="debit"/>
-                                        <field name="credit"/>
-                                        <field name="final_balance"/>
+                                        <field name="code_digits"/>      <!-- Account code -->
+                                        <field name="account"/>          <!-- Account name -->
+                                        <field name="user"/>            <!-- User associated with the account -->
+                                        <field name="company_doc"/>     <!-- Company document -->
+                                        <field name="start_balance" />  <!-- Starting balance -->
+                                        <field name="debit"/>           <!-- Debit amount -->
+                                        <field name="credit"/>          <!-- Credit amount -->
+                                        <field name="final_balance"/>   <!-- Final balance -->
                                     </tree>
                                 </field>
                             </page>
@@ -47,29 +54,32 @@
             </field>
         </record>
 
+        <!-- Tree View to display balance sheet records -->
         <record id="view_balance_sheet_tree" model="ir.ui.view">
-            <field name="name">account.balance_sheet.tree</field>
-            <field name="model">account.balance_sheet</field>
+            <field name="name">account.balance_sheet.tree</field>  <!-- Name of the view -->
+            <field name="model">account.balance_sheet</field>  <!-- Model that the view is associated with -->
             <field name="arch" type="xml">
-                <tree string="Balance General">
-                    <field name="name"/>
-                    <field name="date"/>
+                <tree string="Balance General">  <!-- Title of the tree view -->
+                    <field name="name"/>  <!-- Name of the balance -->
+                    <field name="date"/>  <!-- Date of the balance -->
                 </tree>
             </field>
         </record>
 
+        <!-- Action to open the balance sheet view -->
         <record id="action_balance_sheet_form" model="ir.actions.act_window">
-            <field name="name">Balance General Reporte</field>
-            <field name="res_model">account.balance_sheet</field>
-            <field name="view_mode">tree,form</field>
-            <field name="view_id" ref="view_balance_sheet_tree"/>
+            <field name="name">Balance General Reporte</field>  <!-- Name of the action -->
+            <field name="res_model">account.balance_sheet</field>  <!-- Model for the action -->
+            <field name="view_mode">tree,form</field>  <!-- Available views: tree and form -->
+            <field name="view_id" ref="view_balance_sheet_tree"/>  <!-- View to be used for displaying information -->
         </record>
 
+        <!-- Menu to access the balance sheet in the accounting module -->
         <record id="menu_balance_sheet" model="ir.ui.menu">
-            <field name="name">Balance General Corregido</field>
-            <field name="parent_id" ref="account_reports.account_reports_audit_reports_menu"/>
-            <field name="action" ref="action_balance_sheet_form"/>
-            <field name="sequence" type="int">10</field>
+            <field name="name">Balance General Corregido</field>  <!-- Name of the menu -->
+            <field name="parent_id" ref="account_reports.account_reports_audit_reports_menu"/>  <!-- Parent menu where this item will appear -->
+            <field name="action" ref="action_balance_sheet_form"/>  <!-- Action associated with the menu to open the view -->
+            <field name="sequence" type="int">10</field>  <!-- Position of the menu item -->
         </record>
     </data>
 </odoo>
