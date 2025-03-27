@@ -35,7 +35,7 @@
                         <notebook>
                             <page string="Información General" name="bottom">
                                 <!-- View for balance sheet lines -->
-                                <field name="balance_sheet_lines" nolabel="1" widget="section_and_note_one2many" mode="tree">
+                                <field name="balance_sheet_lines" nolabel="1" widget="section_and_note_one2many">
                                     <list>
                                         <field name="code_digits"/>      <!-- Account code -->
                                         <field name="account"/>          <!-- Account name -->
@@ -59,10 +59,10 @@
             <field name="name">account.balance_sheet.tree</field>  <!-- Name of the view -->
             <field name="model">account.balance_sheet</field>  <!-- Model that the view is associated with -->
             <field name="arch" type="xml">
-                <tree string="Balance General">  <!-- Title of the tree view -->
+                <list string="Balance General">  <!-- Title of the tree view -->
                     <field name="name"/>  <!-- Name of the balance -->
                     <field name="date"/>  <!-- Date of the balance -->
-                </tree>
+                </list>
             </field>
         </record>
 
