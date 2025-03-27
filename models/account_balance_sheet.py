@@ -21,8 +21,15 @@ class AccountBalanceSheet(models.Model):
     date_from = fields.Date(string='Desde', default=first_day_last_month)
     date_to = fields.Date(string='Hasta', default=last_day_last_month)
     partner_id = fields.Many2one('res.partner', string='Partner')
+    account = fields.Char(string='Account')
     account_id_from = fields.Many2one('account.account', string='From Account')
     account_id_to = fields.Many2one('account.account', string='To Account')
+    user = fields.Char(string='Partners')
+    company_doc = fields.Char(string='Partner Document')
+    start_balance = fields.Float(string='Initial Balance', digits=(16, 2), default=0.0)
+    debit = fields.Float(string='Debits', digits=(16, 2), default=0.0)
+    credit = fields.Float(string='Credits', digits=(16, 2), default=0.0)
+    final_balance = fields.Float(string='Final Balance', digits=(16, 2), default=0.0)
 
     @api.depends('date')
     def _compute_name(self):
