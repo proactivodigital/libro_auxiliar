@@ -16,6 +16,7 @@ class AccountBalanceSheet(models.Model):
     # Definición de las fechas por defecto (primer y último día del mes anterior)
     first_day_last_month = datetime.now().replace(day=1) - timedelta(days=1)
     first_day_last_month = first_day_last_month.replace(day=1)
+    code_digits = fields.Char(string='Codigos')
     last_day_last_month = datetime.now().replace(day=1) - timedelta(days=1)
     date_from = fields.Date(string='Desde', default=first_day_last_month)
     date_to = fields.Date(string='Hasta', default=last_day_last_month)
