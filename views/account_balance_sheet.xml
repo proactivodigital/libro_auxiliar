@@ -36,7 +36,7 @@
                             <page string="Información General" name="bottom">
                                 <!-- View for balance sheet lines -->
                                 <field name="balance_sheet_lines" nolabel="1" widget="section_and_note_one2many" mode="tree">
-                                    <tree>
+                                    <list>
                                         <field name="code_digits"/>      <!-- Account code -->
                                         <field name="account"/>          <!-- Account name -->
                                         <field name="user"/>            <!-- User associated with the account -->
@@ -45,7 +45,7 @@
                                         <field name="debit"/>           <!-- Debit amount -->
                                         <field name="credit"/>          <!-- Credit amount -->
                                         <field name="final_balance"/>   <!-- Final balance -->
-                                    </tree>
+                                    </list>
                                 </field>
                             </page>
                         </notebook>
